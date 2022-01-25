@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/boleto/:billetNumber", (req, res)=>{
     const {billetNumber} = req.params;
     const response = billetService.verifyBilletType(billetNumber);
-    res.status(response.status).json(response.billet);
+    res.status(response.status).json(response.billetStatus);
 })
 
 module.exports = router;
