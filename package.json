@@ -1,0 +1,24 @@
+{
+  "name": "selecaoewally",
+  "version": "1.0.0",
+  "description": "Desafio para a seleção para vaga nodejs ewally",
+  "main": "startUp.js",
+  "scripts": {
+    "start": "nodemon startUp.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josevitorvieira/selecaoewally.git"
+  },
+  "author": "José_Vitor_Vieira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josevitorvieira/selecaoewally/issues"
+  },
+  "homepage": "https://github.com/josevitorvieira/selecaoewally#readme",
+  "dependencies": {
+    "dotenv": "^14.3.0",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}
