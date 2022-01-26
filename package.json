@@ -2,9 +2,9 @@
   "name": "selecaoewally",
   "version": "1.0.0",
   "description": "Desafio para a seleção para vaga nodejs ewally",
-  "main": "startUp.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon startUp.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
