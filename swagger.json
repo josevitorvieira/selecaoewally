@@ -1,0 +1,72 @@
+{
+    "openapi" : "3.0.0",
+    "info": {
+        "title": "Documentação desafio para seleção Ewally",
+        "description": ">-  Documentação da api de verificação de linhas digitáveis de títulos bancários e boletos de concessionaria.",        
+        "version": "1.0.0"
+    },
+
+    "servers":[
+        {
+        "url": "http://localhost:8080",
+        "description": "url Base da api"
+        }
+    ],
+    
+    "paths": {
+        "/boleto/{billetNumber}": {
+            "get": {
+                "sumary" : "Verificação de linha digitavel de boletos",
+                "description": "Esta rota é responsavel por verificar se a linha digitavel de boleto é valida, se for ela vai retornar o codigo de barras, valor(quando houver) e data de vencimento(quando houver)",
+                "tag": ["Billet"],
+                "parameters":[
+                    {
+                        "name": "billetNumber",
+                        "in": "path",
+                        "description": "linha digitavel de um boleto que pode conter apenas numeros",
+                        "required": true,
+                        "schema": {
+                            "default": "10499141369100010004900060580966388920000005500"
+                        }
+                    }
+                ],
+
+                "responses": {
+                    "400": {
+                       "description": "Apenas números devem ser enviados na requisição"
+                    },
+                    "200": {
+                        "description": "Retorna um objeto contendo o numero do codigo de barras, o valor do boleto e a data de vencimento.",
+                        "content": {
+                            "aplication/json":{
+                                "type": "object",
+                                "schema":{
+                                    "$ref": "#components/schemas/ReturnGetBoleto"
+                                }        
+                            }
+                        }
+                     }
+                 }
+            }
+        }
+    },
+
+    "components": {
+        "schemas": {
+            "ReturnGetBoleto":{
+                "type": "object",
+                "properties": {
+                    "barCode": {
+                       "type": "string"
+                    },
+                    "amount":{
+                       "type": "string"
+                    } ,
+                    "expirationDate": {
+                        "type": "string"
+                    }
+                }    
+            }
+        }
+    }
+}

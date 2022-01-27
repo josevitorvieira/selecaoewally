@@ -1,4 +1,9 @@
+const http = require('http');
+const request = require('supertest');
+
 const billetHelper = require('./helpers/billetHelper');
+const app = require('./index');
+
 
 describe("Testing barcode functions", ()=>{
 
@@ -69,6 +74,34 @@ describe("Testing barcode functions", ()=>{
         expect(response).toMatch(/2022-02-10/);
     });
 });
+
+describe('Test router',()=>{
+    it('should test connection with route, status and returned object ', async ()=>{
+        const billetNumber = "10499141369100010004900060580966388920000005500";
+        const response = await request(app).get(`/boleto/${billetNumber}`);
+        const object = JSON.parse(response.text); 
+        
+        expect(object).toEqual(expect.objectContaining(
+            {
+                barCode: "10493889200000055009141391000100040006058096",
+                amount:  "55.00",
+                expirationDate: "2022-02-10"
+            }
+        ));
+        expect(response.status).toEqual(200);
+    });
+
+    it('', async ()=>{
+        const billetNumber = "1049914136910001000490006058096638892000000550a";
+        const response = await request(app).get(`/boleto/${billetNumber}`);
+        
+        expect(response.text).toMatch("Apenas números devem ser enviados na requisição");
+        expect(response.status).toEqual(400);
+    });
+
+    
+
+})
 
 
 
