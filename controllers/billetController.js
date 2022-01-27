@@ -1,7 +1,7 @@
 const express = require('express');
-const billetService = require('../services/billetService');
-
 const router = express.Router();
+
+const billetService = require('../services/billetService');
 
 router.get("/boleto/:billetNumber", (req, res)=>{
     const {billetNumber} = req.params;
