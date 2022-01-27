@@ -1,9 +1,7 @@
-const http = require('http');
 const request = require('supertest');
 
 const billetHelper = require('./helpers/billetHelper');
 const app = require('./index');
-
 
 describe("Testing barcode functions", ()=>{
 
@@ -31,7 +29,6 @@ describe("Testing barcode functions", ()=>{
         
                 expirationDate: "8892",
                 amount: "0000005500",
-                field5: "88920000005500",
             }
         ));
         
@@ -91,7 +88,7 @@ describe('Test router',()=>{
         expect(response.status).toEqual(200);
     });
 
-    it('', async ()=>{
+    it('should test the return if something other than numbers is sent in the request', async ()=>{
         const billetNumber = "1049914136910001000490006058096638892000000550a";
         const response = await request(app).get(`/boleto/${billetNumber}`);
         

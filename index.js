@@ -6,7 +6,7 @@ const billetController = require('./controllers/billetController');
 const swaggerDocs = require('./swagger.json');
 
 const api = express();
-const port =process.env.PORT || 8080
+const port = process.env.PORT || 8080;
 
 api.use(express.json());
 api.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));

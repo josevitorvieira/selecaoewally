@@ -40,7 +40,7 @@ const bankTitleBillet = (billetNumber)=>{
     const digitCheckerIsValid = billetHelper.validateDigitsChecker(digitCheckerArray, billetData.checkDigits);
     if(digitCheckerIsValid.status === 400) return { status: 400, billetStatus: digitCheckerIsValid.billetStatus };
     
-    const expirationDate = billetHelper.calculateExpirationDate(billetData.expirationDate, "bankTitle");
+    const expirationDate = billetHelper.calculateExpirationDate(billetData.expirationDate);
     
     const billetValue = billetHelper.calculateValueOfBillet(billetData.amount);
 
@@ -76,8 +76,6 @@ const concessionaireBillet = (billetNumber)=>{
     const digitCheckerIsValid = billetHelper.validateDigitsChecker(digitCheckerArray, billetData.checkDigits);
     if(digitCheckerIsValid.status === 400) return { status: 400, billetStatus: digitCheckerIsValid.billetStatus }; 
 
-    const expirationDate = billetHelper.calculateExpirationDate(billetNumber);
-    
     const billetValue = billetHelper.calculateValueOfBillet(billetData.amount)
 
     return {
@@ -85,7 +83,7 @@ const concessionaireBillet = (billetNumber)=>{
         billetStatus: {
             barCode: billetData.barCode,
             amount: billetValue || '',
-            expirationDate: expirationDate || ''
+            expirationDate: ''
         }
     } 
 }

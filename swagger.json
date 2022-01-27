@@ -23,7 +23,7 @@
                     {
                         "name": "billetNumber",
                         "in": "path",
-                        "description": "linha digitavel de um boleto que pode conter apenas numeros",
+                        "description": "linha digitavel de um boleto que contem apenas numeros sendo 47 caracteres para titulos bancarios ou 48 para pagamentos de conssessionarias.",
                         "required": true,
                         "schema": {
                             "default": "10499141369100010004900060580966388920000005500"

@@ -43,7 +43,6 @@ const recoveryDataBankTitle = (billetNumber)=>{
 
         expirationDate: expirationDate,
         amount: amount,
-        field5: field5,
     };
 }
 
@@ -131,15 +130,15 @@ const calculateDigitCheckerModule10 = (data, type)=>{
 
 const calculateDigitCheckerModule11 = (data, type)=>{
 
-    let operator = 2;
-
     data = data.split('');
     data = data.reverse();
     
+    let multiplier = 2;
+
     data = data.map((element) => {
-        if(operator > 9) operator = 2;
-        element = +element*operator;
-        operator++;
+        if(multiplier > 9) multiplier = 2;
+        element = +element * multiplier;
+        multiplier++;
         return element;
     });
 
@@ -155,7 +154,7 @@ const calculateDigitCheckerModule11 = (data, type)=>{
             break;
 
         case "concessionaire":
-            if(result === 11 || 10) result = 0;
+            if(result === 11 || result === 10) result = 0;
             break;
     }
     return result;      
@@ -170,59 +169,52 @@ const validateDigitsChecker = (digitCheckerCalculated, verifyingDigitsBilletNumb
             switch(digitCheckerCalculated[index].name){
 
                 case "digitCheckerBarCode":
-                    return { status: 400, billetStatus: "o digito verificador do codigo de barras enviado na requisição não confere com calculado." };
+                    return { status: 400, billetStatus: "O digito verificador do codigo de barras enviado na requisição não confere com calculado." };
                     
                 default:
-                    return {status: 400, billetStatus: `o digito verificador do ${digitCheckerCalculated[index].name} enviado na requisição não confere com o calculado.` };                        
+                    return {status: 400, billetStatus: `O digito verificador do ${digitCheckerCalculated[index].name} enviado na requisição não confere com o calculado.` };                        
             }
         }         
     }
     return {status: 200};
 }
 
-const calculateValueOfBillet = (amount)=>{
-    if(+amount === 0) return '';
-
-    const amountArray = amount.split('');
+const calculateValueOfBillet = (value)=>{
     
-    for (let index = 0; index < amountArray.length; index++) {
-        if(amount[index] !== '0'){
-            amount = amount.substr(index);
+    if(+value === 0) return '';
+
+    const valueArray = value.split('');
+    
+    for (let index = 0; index < valueArray.length; index++) {
+        if(value[index] !== '0'){
+            value = value.substr(index);
             break;    
         }                    
     }
 
-    switch(amount.length){
+    switch(value.length){
         case 1:
-            return `00.0${amount}`;     
+            return `00.0${value}`;     
 
         case 2: 
-            return `00.${amount}`;       
+            return `00.${value}`;       
 
         case 3: 
-            return `0${basicHelper.splitString(amount, 0, 1)}.${basicHelper.splitString(amount, 1, 2)}`;
+            return `0${basicHelper.splitString(value, 0, 1)}.${basicHelper.splitString(value, 1, 2)}`;
             
         default:
-            amountLength = amount.length -2;
-            return basicHelper.splitString(amount, 0, amountLength) + "." + basicHelper.splitString(amount, amountLength, 2);                                   
+            const valueLength = value.length -2;
+            return basicHelper.splitString(value, 0, valueLength) + "." + basicHelper.splitString(value, valueLength, 2);                                   
     }
 }
 
-const calculateExpirationDate = (expirationFactor, type)=>{
+const calculateExpirationDate = (expirationFactor)=>{
     
-    switch(type){
+    if(basicHelper.splitString(expirationFactor, 0, 1) === '0') return '';
 
-        case "bankTitle":
-
-            if(basicHelper.splitString(expirationFactor, 0, 1) === '0') return '';
-
-            var date = new Date('10/07/1997');
-            date.setTime(date.getTime() + ((+expirationFactor + 1 ) * 24 * 60 * 60 * 1000));
-            return date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + (date.getDate())).slice(-2)
-                        
-        case "concessionaire":
-            return '';            
-    }    
+    var date = new Date('10/07/1997');
+    date.setTime(date.getTime() + ((+expirationFactor + 1 ) * 24 * 60 * 60 * 1000));
+    return date.getFullYear() + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + ("0" + (date.getDate())).slice(-2);
 }
 
 module.exports = {
